@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MoodScope - Explore Your Mood</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #2c3e50, #4ca1af);
+      transition: background 1s ease-in-out;
+      overflow-y: scroll;
+    }
+
+    .container {
+      text-align: center;
+      padding: 3rem 2rem;
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+      color: #ecf0f1;
+    }
+
+    .mood-selector {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .mood-option {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.3s, background 0.5s;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      backdrop-filter: blur(10px);
+      overflow: hidden;
+    }
+
+    .mood-option:hover {
+      transform: scale(1.1);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .mood-option img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .mood-display {
+      margin-top: 3rem;
+      color: #ecf0f1;
+      font-size: 1.4rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s ease-in-out;
+    }
+
+    .mood-display.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .quote {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      max-width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .extra-content {
+      margin-top: 4rem;
+      color: #ecf0f1;
+      line-height: 1.6;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .long-scroll-section {
+      margin-top: 4rem;
+      color: #ecf0f1;
+      line-height: 1.8;
+      max-width: 800px;
+      margin: 4rem auto;
+      padding-bottom: 5rem;
+    }
+
+    .long-scroll-section h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .long-scroll-section p {
+      margin-bottom: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>What's Your Mood Today?</h1>
+    <div class="mood-selector">
+      <div class="mood-option" onclick="showMood('happy')">
+        <img src="./assets/images/happy.jpg" alt="Happy">
+      </div>
+      <div class="mood-option" onclick="showMood('sad')">
+        <img src="./assets/images/sad.jpg" alt="Sad">
+      </div>
+      <div class="mood-option" onclick="showMood('angry')">
+        <img src="./assets/images/angry.jpg" alt="Angry">
+      </div>
+      <div class="mood-option" onclick="showMood('calm')">
+        <img src="./assets/images/calm.jpg" alt="Calm">
+      </div>
+    </div>
+
+    <div class="mood-display" id="moodDisplay">
+      <p id="moodText"></p>
+      <p class="quote" id="quoteText"></p>
+    </div>
+
+    <div class="extra-content">
+      <h2>Explore More</h2>
+      <p>
+        Understanding your mood is the first step toward emotional wellness. MoodScope allows you to reflect on your feelings and receive inspiration. Whether you're beaming with joy or navigating a tough day, there's always something to lift your spirit.
+      </p>
+      <p>
+        Scroll down and revisit the app daily to check in with yourself. Over time, you'll notice patterns and can use that insight to build a happier, more balanced life.
+      </p>
+      <p>
+        Stay mindful. Stay inspired.
+      </p>
+    </div>
+
+    <div class="long-scroll-section">
+      <h2>Daily Mood Tips</h2>
+      <p>Start your day with a deep breath and a moment of gratitude. It sets the tone for emotional clarity.</p>
+      <p>Take a short walk and feel nature around you. Movement helps shift negative energy.</p>
+      <p>Keep a mood journal to reflect on patterns. This helps you build emotional resilience.</p>
+      <p>Listen to music that aligns with your current emotion. Let it guide you or shift you as needed.</p>
+      <p>Talk to someone you trust. Sharing can help release bottled-up feelings.</p>
+      <p>Celebrate even the smallest wins. Acknowledging progress enhances happiness.</p>
+      <p>Take regular breaks from screens. A bit of silence can reset your mood.</p>
+      <p>Practice self-compassion. You're doing your best, and that's more than enough.</p>
+      <p>Visualize a peaceful place. Whether it's a beach, a forest, or your room — go there in your mind.</p>
+      <p>End your day with reflection. What went well? What will you try differently tomorrow?</p>
+    </div>
+  </div>
+
+  <script>
+    const moodQuotes = {
+      happy: {
+        bg: 'linear-gradient(135deg, #f6d365, #fda085)',
+        text: "You're glowing with joy! Keep that energy alive!",
+        quote: "Happiness is not by chance, but by choice."
+      },
+      sad: {
+        bg: 'linear-gradient(135deg, #5f72bd, #9b23ea)',
+        text: "It's okay to feel down. Breathe, you're doing great.",
+        quote: "Tears come from the heart and not from the brain."
+      },
+      angry: {
+        bg: 'linear-gradient(135deg, #cb2d3e, #ef473a)',
+        text: "Take a deep breath. Let go of what you can't control.",
+        quote: "Speak when you are angry and you'll make the best speech you'll ever regret."
+      },
+      calm: {
+        bg: 'linear-gradient(135deg, #00c9ff, #92fe9d)',
+        text: "Peace is powerful. Carry it with you always.",
+        quote: "Calm mind brings inner strength and self-confidence."
+      }
+    };
+
+    function showMood(mood) {
+      const moodDisplay = document.getElementById('moodDisplay');
+      const moodText = document.getElementById('moodText');
+      const quoteText = document.getElementById('quoteText');
+
+      document.body.style.background = moodQuotes[mood].bg;
+      moodText.textContent = moodQuotes[mood].text;
+      quoteText.textContent = moodQuotes[mood].quote;
+      moodDisplay.classList.add('active');
+    }
+  </script>
+</body>
+</html>
